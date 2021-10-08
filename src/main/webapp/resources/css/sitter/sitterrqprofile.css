@@ -1,0 +1,48 @@
+.page-top{
+	padding : 10px 30px;
+	border-bottom : 1px solid #1890ff;
+	margin-bottom : 10px;
+}
+.page-top h1{
+	font-size : 30px;
+font-weight:600;
+color : #1890ff;
+}
+.bott{
+	padding : 20px;
+}
+.con{
+	display : flex;
+	flex-direction: row;
+margin : 18px;}
+.con label{
+width : 70px;
+text-align : right;
+margin-right : 30px;
+font-weight : 600;}
+.con input{
+width : 200px;
+text-align : right;
+border-radius : 7px;
+border : 2px solid  #1890FF;
+}
+#incon{
+	width : 90px;
+}
+.rvWrite{
+	position : absolute;
+	bottom: -30px;
+  right: 50px;
+	border:none;
+	background: none;
+	font-weight:600;
+	font-size: 14px;
+	color : #1890ff;
+}
+.rvWrite:hover{
+	font-size:14.3px;
+	color : #1890cc;
+}
+.pt{
+	position : relative;
+}

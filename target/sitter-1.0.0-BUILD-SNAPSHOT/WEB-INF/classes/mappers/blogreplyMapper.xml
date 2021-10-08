@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="blogreplyMapper">
+    
+    <select id="blogreadReply" resultType="com.pet.sitter.vo.ReplyVO">
+       select reply_no, reply_content, reply_writer, reply_date from blogReply where blog_no = #{blog_no}
+    </select>
+    
+    <insert id="blogwriteReply">
+    insert into blogReply(blog_no, reply_no, reply_content, reply_writer, reply_date ) values ( #{blog_no}, seq_blog_reply.nextval, #{reply_content}, #{reply_writer}, sysdate)
+    </insert>
+    
+
+   <delete id="blogdeleteReply">
+   delete from blogReply
+   where reply_no = #{reply_no}
+   </delete>
+
+<select id="blogselectReply" resultType="com.pet.sitter.vo.ReplyVO">
+   select blog_no, reply_no, reply_content, reply_writer, reply_date from blogReply where reply_no = #{reply_no}
+</select>
+
+<select id="blogreplyTotal" resultType="int" parameterType="int">
+select count(*) from blogReply where blog_no = #{blog_no}
+</select>
+</mapper>
+    

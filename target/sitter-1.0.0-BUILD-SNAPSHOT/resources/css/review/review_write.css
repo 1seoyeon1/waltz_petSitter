@@ -1,0 +1,132 @@
+@charset "UTF-8";
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+.star {
+	width:30px;
+	height:30px;
+    visibility:hidden;
+    font-size:30px;
+    cursor:pointer;
+}
+.whole-form{
+	position:absolute;
+	top:15%;
+	width: 100%;
+	text-align:center;
+}
+
+.star:before {
+   content: "\f005";
+   display: inline-block;
+   font-family: FontAwesome;
+   position: absolute;
+   visibility:visible;
+   color:#ddd;
+}
+.star:checked:before {
+   content: "\f005";
+   position: absolute;
+   color:#1890FF;
+}
+
+.info-input{
+	margin:1%;
+}
+
+#r_title{
+	width: 60%;
+	resize: none;
+	text-align:center;
+	margin:0px;
+	border-style:none;
+	font-size: 25px;
+}
+#r_title:focus{
+	outline:none;
+}
+
+#r_content {
+			width: 60%;
+			height: 500px;
+			padding: 10px;
+			box-sizing: border-box;
+			border: solid 1px #1E90FF;
+			font-size: 18px;
+			resize: none;
+}
+#r_content:focus{
+	  outline: none;
+}
+
+.filebox{
+	text-align:left;
+	margin-left: 21%;
+}
+
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+	.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #dddddd;
+    width: 22%;
+    color: #1890FF;
+}
+.filebox .upload-name:focus{
+	outline: solid 1px #1890FF;
+	border-radius: 3px;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color:  #1890FF;
+    border-radius:3px;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+}
+ 
+.write_btn{
+	font-size:20px;
+	font-weight: bolder;
+	margin-right:40px;
+}
+
+.all_star {
+	margin-left: 46%;
+}
+
+
+.list{
+	color:#898F9C;
+	font-size:20px;
+	font-weight: bolder;
+}
+
+.list:hover{
+	text-decoration:none;
+}
+
+.petImage {
+position: absolute;
+inset: -100%;
+margin: auto;
+height: 100%;
+width: 100%;
+border-radius: 3px;
+pointer-events: none;
+  max-width: 485px;
+  max-height: 300px;
+}

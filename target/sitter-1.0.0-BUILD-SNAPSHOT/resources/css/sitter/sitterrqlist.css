@@ -1,0 +1,93 @@
+.page-top{
+padding: 80px 10px 30px;
+width : 1000px;
+margin : 10px auto;
+}
+.page-top h1{
+font-size : 50px;
+font-weight:600;
+color : #555555;
+}
+.page-btt{
+width : 100%;
+height : 100%;
+background:#F7F8FA;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+#container{
+display:flex;
+padding : 30px;
+margin-left: 40px;
+}
+.headpt{
+display: flex;
+justify-content: space-evenly;
+margin: 70px 60px 25px;
+background-color : #1890ff77;
+border-radius : 8px;
+}
+.headpt span{
+	padding : 10px;
+font-size : 17px;
+font-weight: 600;
+}
+.rqlist{
+display : flex;
+flex-direction: column;
+width: 1000px;
+padding-bottom: 80px;
+border-radius : 8px;
+border : 1px solid rgb(223,227,234);
+box-shadow : rgba(0,0,0,0.07) 1px 3px 7px;
+background-color : #fff;
+}
+.rqcon{
+	display : flex;
+	justify-content: space-evenly;
+	margin : 9px 30px;
+	align-items: center;
+	color : #555555;
+}
+.rqcon:hover{
+	background-color : #1890ff44;
+	border-radius : 8px;
+}
+.elm{
+	width : 120px;
+	margin : 15px 10px;
+}
+.head-top{
+	display : flex;
+	flex-direction : column;
+}
+.conlist{
+	border : 2px solid #1890ff;
+	border-radius : 8px;
+	width : 90%;
+  margin-left: 50px;
+padding-top: 20px;
+    padding-bottom: 40px;
+}
+.pagination{
+	float : right;
+}
+a { text-decoration:none !important } 
+a:hover { text-decoration:none !important;}
+
+.ac-type{
+	display : flex;
+	
+}
+.rvWrite{
+	border:none;
+	background: none;
+	font-weight:600;
+	font-size: 14px;
+	color : #1890ff;
+}
+.rvWrite:hover{
+	font-size:14.3px;
+	color : #1890cc;
+}

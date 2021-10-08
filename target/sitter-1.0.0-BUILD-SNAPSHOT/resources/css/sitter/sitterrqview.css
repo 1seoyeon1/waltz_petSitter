@@ -1,0 +1,116 @@
+.page-top{
+padding: 80px 10px 30px;
+width : 1000px;
+margin : 10px auto;
+}
+.page-top h1{
+	font-size : 50px;
+font-weight:600;
+color : #555555;
+}
+.rqview{
+background-color :#F7F8FA;
+padding : 80px;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.conpt{
+	position : relative;
+	display : flex;
+flex-direction: column;
+width: 840px;
+border-radius : 8px;
+border : 1px solid rgb(223,227,234);
+box-shadow : rgba(0,0,0,0.07) 1px 3px 7px;
+background-color : #fff;
+padding: 60px 60px 120px;
+}
+.pet-info, .con-date{
+	display:flex;
+	flex-direction:column;
+}
+.petpt{
+	margin-top : 40px;
+	border-radius : 8px;
+border : 1px solid #1890ff;
+box-shadow : rgba(0,0,0,0.07) 1px 3px 7px;
+background-color : #fff;
+padding : 40px;
+	width : 100%;
+}
+.con, .petdt{
+   display : flex;
+   flex-direction: column;
+margin : 15px;}
+.con label{
+width : 60px;
+text-align : right;
+margin-right : 30px;}
+.con input{
+width : 280px;
+text-align : right;
+border-radius : 7px;
+border : 2px solid  #1890FF;
+}
+textarea{
+width : 290px;
+height : 80px;
+border-radius : 7px;
+margin-top: 30px;
+border: 2px solid #1890FF;
+padding:4px;
+}
+.ptlb{
+	font-size : 30px;
+	color : #1890dd;
+}
+.line{
+	margin-bottom : 30px;
+	padding-bottom : 20px;
+border-bottom: 1px solid #1890cccc;
+}
+.img-pt{
+	width : 180px;
+	height : 200px;
+	    overflow:hidden;
+    margin:0 auto;
+    border-radius : 7px;
+    margin-right : 50px;
+}
+.img{
+	width : 100%;
+	height : 100%;
+	object-fit:cover;
+}
+#btn{
+	color : #1890FF;
+font-weight : 600;
+padding : 6px 12px;
+font-size : 17px;
+text-align : center;
+vertical-align : middle;
+border : 1px solid transparent;
+border-radius : 4px;
+cursor:pointer;
+background: none;
+}
+#btn:hover{
+	color : #1890cc;
+	font-size : 14.3;
+}
+.sub_rq{
+	position : absolute;
+	bottom : 30px;
+	right : 280px;
+}
+.rej_rq{
+	position : absolute;
+	bottom : 30px;
+	right : 180px;
+}
+.back{
+	position : absolute;
+	bottom : 30px;
+	right : 80px;
+}

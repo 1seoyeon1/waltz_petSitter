@@ -1,0 +1,57 @@
+.btnn{
+color : #1890FF;
+font-weight : 600;
+padding : 5px 10px;
+font-size : 14px;
+text-align : center;
+vertical-align : middle;
+border : 1px solid transparent;
+border-radius : 4px;
+cursor:pointer;
+background: none;
+}
+.btnn:hover{
+	font-size : 14.3px;
+	color : #1890cc;
+}
+.wrpt{
+display : flex;
+flex-direction : column;
+margin: 40px 20px 20px;
+padding : 20px 30px 10px;
+border : 2px solid #1890FF;
+border-radius : 9px;}
+.btnpt{
+display : flex;
+justify-content: flex-end;
+margin-top : 45px;
+}
+.imgch{
+margin-top : 10px;
+position : relative;}
+.page-t{
+margin-top : 10px;
+padding : 10px 10px 0;
+border-bottom : 1px solid #1890ff;
+}
+.page-t h4{
+	
+font-size : 21px;
+color : #1890FF;}
+.btnf{
+	position : absolute;
+  top: -3px;	
+background-color : #1890FF;
+color : #fff;
+font-weight : 600;
+padding : 7px 13px;
+font-size : 14px;
+text-align : center;
+vertical-align : middle;
+border : 1px solid transparent;
+border-radius : 4px;
+cursor:pointer;
+}
+.btnf:hover{
+	background-color : #1890cc;
+}

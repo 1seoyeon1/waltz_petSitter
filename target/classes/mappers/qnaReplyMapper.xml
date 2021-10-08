@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="replyMapper">
+           <!--  댓글 전체 목록  -->
+       <select id="replyList" resultType="com.pet.sitter.vo.QnaReplyVO">
+          SELECT QNO, SITTER_IMAGE FROM QNAREPLY NATURAL JOIN SITTERBOARD
+       </select>
+       
+    	<!--  댓글 조회 -->
+    	<select id="readReply" resultType="com.pet.sitter.vo.QnaReplyVO">
+    		SELECT qno, qna_rno, qna_reply_content, sitter_image, sitter_email, qna_reply_date
+    		FROM qnaReply natural join sitterboard
+    		WHERE qno = #{qno}
+    	</select>
+    	
+    	<!--  댓글 작성 -->
+    	<insert id="writeReply">
+    		INSERT INTO qnaReply(qno, qna_rno, qna_reply_content, sitter_email)
+    					VALUES(#{qno}, SEQ_QNAREPLY_RNO.nextval, #{qna_reply_content}, #{sitter_email})
+    	</insert>
+    	
+    	<update id="replyYN">
+    		UPDATE qna 
+    		set reply = 1
+    		where qno = #{qno}
+    		
+    	</update>
+		
+		<!--  댓글 수정 -->    
+		<update id="updateReply" parameterType="com.pet.sitter.vo.QnaReplyVO">
+			UPDATE qnaReply SET qna_reply_content = #{qna_reply_content}
+			WHERE qna_rno = #{qna_rno}
+		</update>
+		
+		<!--  댓글 삭제 -->
+		<delete id="deleteReply" parameterType="com.pet.sitter.vo.QnaReplyVO">
+			DELETE FROM qnaReply
+			WHERE qna_rno = #{qna_rno}
+		</delete>
+
+		
+		<!-- 선택된 댓글 조회 -->
+		<select id="selectReply" resultType="com.pet.sitter.vo.QnaReplyVO">
+			SELECT qno, qna_rno, qna_reply_content, sitter_image, sitter_email, qna_reply_date
+			FROM qnaReply natural join sitterboard
+			WHERE qna_rno = #{qna_rno}
+		</select>
+		
+		<select id="replyTotal" resultType="int" parameterType="int">
+			select count(*) from qnaReply where qno = #{qno}
+		</select>
+    </mapper>

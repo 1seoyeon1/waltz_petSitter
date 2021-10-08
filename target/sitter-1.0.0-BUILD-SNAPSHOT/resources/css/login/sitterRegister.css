@@ -1,0 +1,86 @@
+
+
+
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Alata', sans-serif;
+}
+
+
+#click:hover {
+	cursor: pointer;
+}
+button:hover{
+	cursor:pointer;
+}
+
+
+
+#margin{margin-top: 30px;}
+
+#submit{background-color: #1890FF;
+border-radius:10px;
+padding:7px;
+color:white;
+border: solid 1px white;
+margin-top: 40px;
+}
+
+#cancel{
+background-color: #CC6666;
+border-radius:10px;
+padding:7px;
+color:white;
+border: solid 1px white;
+margin-top: 40px;
+}
+
+body{background-image: url('/resources/images/sitterRegister_bg.jpg');
+     background-repeat: no-repeat;
+     background-size: 100%;
+    }
+    
+h1{margin-bottom: 40px;
+   color: black;
+   }
+
+label{color:white;}
+
+
+#form-group{margin-top: 30px;}
+
+.sitterRegisterForm{
+	
+	width:350px;
+    height: 450px;
+    display: inline-block;
+    flex-direction: row;
+    box-shadow: 10px black;
+    border-radius: 10px;
+    margin-top: 200px;
+    margin-left: 300px;
+    color:white;
+	     
+} 
+
+#emailbtn{
+background-color: #CC9900;
+border-radius:10px;
+padding:7px;
+color:white;
+border: solid 1px white;}
+
+#phonebtn{
+background-color: #CC9900;
+border-radius:10px;
+padding:7px;
+color:white;
+border: solid 1px white;}
+
+#form-group{margin-top: 20px;}
+
+
+.img{margin-bottom: 40px;}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    
+<mapper namespace="sitterMapper">
+      
+      
+      <insert id="sitterRegister">
+        insert into sittermember(
+                    sitter_email, sitter_password, sitter_name, sitter_phone, sitter_gender)
+        values(
+                 #{sitter_email}, #{sitter_password}, #{sitter_name}, #{sitter_phone}, #{sitter_gender}
+        )
+      </insert>
+      
+      <insert id="sitterInfo" >
+      insert into sitterboard (sitter_exp, sitter_intro, sitter_addr, sitter_price, sitter_image, sitter_email)
+      values('경력을 작성해주세요','소개를 입력해주세요','korea',0,'noimg.gif',#{sitter_email})
+      </insert>
+      
+      
+      <select id="sitterLogin" resultType="com.pet.sitter.vo.SitterVO">
+      
+        select sitter_email , sitter_password from sitterMember where sitter_email = #{sitter_email}
+      
+      </select>
+      
+      
+      	<!-- 이메일 중복 체크 -->
+      <select id="sitteremailChk" resultType="int" parameterType="com.pet.sitter.dao.SitterDAO">
+        SELECT COUNT(*) FROM SITTERMEMBER
+        WHERE sitter_email = #{sitter_email}
+      </select>
+      
+      	<!-- 핸드폰 중복 체크 -->
+      <select id="sitterphoneChk" resultType="int" parameterType="com.pet.sitter.dao.SitterDAO">
+        SELECT COUNT(*) FROM SITTERMEMBER
+        WHERE sitter_phone = #{sitter_phone}
+      </select>
+      
+      
+      <select id="sitterLoginChk" resultType="int" parameterType="com.pet.sitter.vo.SitterVO">
+      select count(*) from sittermember
+      where sitter_email = #{sitter_email}
+      </select>
+      
+      
+</mapper>

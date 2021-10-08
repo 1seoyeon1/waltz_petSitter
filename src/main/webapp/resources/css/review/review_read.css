@@ -1,0 +1,205 @@
+@charset "UTF-8";
+
+.readReview {
+display: flex;
+flex-direction: column;
+vertical-align: top;
+border-radius: 3px;
+box-shadow: rgb(235, 235, 235) 1px 1px 12px 0px;
+align-items: center;
+border: 1px solid rgb(235, 235, 235);
+padding: 5px 5px 50px;
+}
+
+.read-content {
+	display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 120px;
+	box-sizing: border-box;
+	margin: 0 auto;
+	vertical-align: middle;
+}
+
+#ruse_date {
+	border:none;
+    width: 180px;
+}
+
+
+.prev_button {
+	margin-right: 100px;
+    margin-top: 125px;
+}
+
+.next_button {
+margin-left: 100px;
+margin-top: 125px;
+}
+
+.whowho1 {
+	margin-top: 10px;
+	width: 60px;
+    height: 60px;
+    border-radius: 40px;
+    margin-left: 23px;
+    pointer-events: none;
+}
+
+.review-star {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80px;
+    margin-right: 7%;
+}
+
+.content_title {
+	font-family: Noto Sans KR;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 55px;
+	color: rgb(57,60,71);
+}
+
+.user-star {
+	display: flex;
+    justify-content: space-between;
+    width: 500px;
+    margin-top: 10px;
+}
+
+.review-image {
+position: absolute;
+inset: -100%;
+margin: auto;
+height: 100%;
+width: 100%;
+border-radius: 3px;
+pointer-events: none;
+  max-width: 700px;
+  max-height: 400px;
+}
+
+.imgimg {
+   width: 530px;
+height: 300px;
+overflow: hidden;
+position: relative;
+	margin-top : 10px;
+	margin-bottom : 10px;
+}
+
+.content-head {
+	padding-top: 100px;
+	margin: 25px auto 25px;
+	width: 1080px;
+	box-sizing: border-box;
+}
+
+.header {
+	font-weight: 200;
+	font-size: 39px;
+	line-height: 55px;
+	color: rgb(57,60,71);	
+	margin-bottom: 50px;
+}
+
+.title-header {
+	font-weight: 400;
+	font-size: 25px;
+	color: rgb(57,60,71);	
+}
+
+.review-write-date{
+	margin-top: 20px;
+	margin-left: 64%;
+}
+
+.review-use-date{
+	margin-left: 43%;
+}
+
+
+.reply_content {
+	margin-left: 50%;
+}
+	
+.review-user_email {
+	margin-left:49%;
+}
+.review_content {
+	font-family: "Spoqa Han Sans", "Noto Sans KR", sans-serif !important;
+    margin-top: 24px;
+	width: 500px;
+	font-size: 15px;
+	line-height: 30px;
+	color: rgb(77, 80, 85);
+	text-overflow: ellipsis;
+	text-align: left;
+	word-wrap: break-word;
+	margin-left: 3%;
+}
+
+.content-space{
+	border-top: 1px solid rgb(235, 235, 235);
+	margin-top: 38px;
+	padding-top: 31px;
+	width: 540px;
+	text-align: left;
+}
+
+.who {
+	font-size: 15px;
+	text-align: center;
+	color: rgb(57, 60, 71);
+	font-family: Noto Sans KR;
+}
+
+.sitter_btn {
+	width: 540px;
+    height: 80px;
+    background-color: rgb(250, 250, 252);
+    margin-top: 12px;
+    display: flex;
+    border-radius: 20px;
+}	
+
+.sitter_profile {
+	display: flex;
+	align-items: center;
+	padding-right: 24px;
+	flex: 1 1 0%;
+	align-items: center;
+    justify-content: center;
+}
+
+.goback {
+	margin-left: 42%;
+	margin-top: 100px;
+	margin-bottom: 5%;
+	width: 304px;
+	height: 59px;
+	background-color: rgb(250, 250, 252);
+	border-radius: 30px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.allreview{
+	color: #337ab7;
+	font-family: Noto Sans KR;
+	font-size: 18px;
+	line-height: 40px;
+}
+
+.update_delete { 
+	margin-left: 46%;
+	margin-top: 40px;
+	color: #1890FF;
+}
+	

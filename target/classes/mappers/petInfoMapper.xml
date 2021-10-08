@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="petInfoMapper"> 
+
+	<insert id="insert">
+		insert into petInfo(pno ,pet_type, pet_age, pet_gender, pet_detail, pet_name, pet_image, user_email)
+		values (SEQ_petInfo_pno.nextval , #{pet_type}, #{pet_age}, #{pet_gender}, #{pet_detail}, #{pet_name}, #{pet_image}, #{user_email})
+	</insert>
+	
+	<select id="listPage" resultType="com.pet.sitter.vo.PetInfoVO" parameterType="String">
+	select pno, pet_type, pet_age, pet_gender, pet_detail, pet_name, pet_image, user_email from
+		(select pno, pet_type, pet_age, pet_gender, pet_detail, pet_name, pet_image, user_email, row_number()
+		over(order by pno desc) as rnum from petInfo where 1 = 1
+		) mp where user_email= #{user_email}
+	</select>
+	
+	
+	<select id="listCount" parameterType="int" resultType="int">
+		select count(pno) from petInfo where 1 = 1 and rno > 0 
+	</select>
+	
+	<select id="read" parameterType="int" resultType="com.pet.sitter.vo.PetInfoVO">
+		select pno, pet_type, pet_age, pet_gender, pet_detail, pet_name, pet_image, user_email from petInfo where pno = #{pno}
+	</select>
+	
+	<update id="update" parameterType="com.pet.sitter.vo.PetInfoVO">
+		update petInfo
+		set pet_type = #{pet_type},
+			pet_age = #{pet_age},
+			pet_gender = #{pet_gender},
+			pet_detail = #{pet_detail},
+			pet_name = #{pet_name}
+				where pno = #{pno}
+	</update>
+	
+	<update id="imageUpdate" parameterType="com.pet.sitter.vo.PetInfoVO">
+		update petInfo
+		set pet_image = #{pet_image}
+			where pno = #{pno}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from PetInfo where pno = #{pno}
+	</delete>
+</mapper> 
+  
+  
+  
+    

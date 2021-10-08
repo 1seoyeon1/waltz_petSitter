@@ -1,0 +1,159 @@
+.sec-top hr{
+color : #1890FF;
+border: 0;
+border-top: 1px solid #eee;
+background-color: currentColor;
+height : 0.7px;
+}
+.page-top{
+margin-top : 50px;
+padding-top : 80px;
+width : 1000px;
+margin : 0px auto;
+display : flex;
+flex-direction : column;
+}
+.page-top p{
+display : felx;
+margin-bottom : 20px;
+}
+.page-top span{
+width : 80px;
+border : none;
+background : none;}
+.top-h{
+font-size : 50px;
+font-weight:600;
+color : #555555;
+margin-bottom : 40px;
+}
+.edtpt{
+background-color :#F7F8FA;
+display : flex;
+flex-direction: column;
+padding : 90px 160px;
+align-items: center;
+}
+
+.con{
+margin : 30px 0 0 30px;
+}
+
+#gender-group{
+margin : 30px 0 0 30px;
+}
+.gender-select{
+	border: 2px solid #1890FF;
+	border-radius: 7px;
+	padding:10px;
+	width: 280px;
+}
+
+
+.con label{
+width : 80px;
+text-align : center;
+margin-right : 30px;}
+
+.con input{
+width : 280px;
+text-align : center;
+border-radius : 7px;
+border : 2px solid  #1890FF;
+}
+
+#gen{
+	width:80px;
+	text-align: center;
+	margin-right:30px;
+}
+
+#infoWrite{
+width : 290px;
+height : 120px;
+border-radius : 7px;
+border: 2px solid #1890FF;
+padding:4px;
+resize: none;
+}
+
+#detailWrite{
+width : 290px;
+height : 100px;
+border-radius : 7px;
+border: 2px solid #1890FF;
+padding:4px;
+resize: none;
+}
+#sambtn{
+background-color : #1890FF;
+color : #fff;
+font-weight:600;
+}
+.ifsec{
+position : relative;
+padding : 40px;
+background-color : #fff;
+width: 600px;
+height: 850px;
+border-radius : 8px;
+border : 1px solid rgb(223,227,234);
+box-shadow : rgba(0,0,0,0.07) 1px 3px 7px;
+}
+
+.sec-if{
+margin-top : 30px;}
+.btn button{
+background : none;
+color: #1890FF;
+border : none;
+font-size : 17px;
+font-weight : 600;}
+.btn{
+position : absolute;
+bottom : 30px;
+right : 60px;
+}
+.sec-top p{
+font-size : 26px;
+font-weight : 600;
+color : #1890DD;}
+
+.center{position: absolute;
+        left: 32%;
+        top: 11%;
+       }
+       
+#delete{color: crimson;
+        margin-left: 20px;
+       }
+       
+#cancel-btn{
+        margin-left: 20px;
+        color: crimson;
+       }
+.image-wrap {
+    width: 500px;
+    margin-left: 5px;
+    border-radius: 3px;
+}
+#image-edit{
+	margin-top:10px;
+	background : #1890FF;
+	color: white;
+	border : none;
+	font-weight : 600;
+	padding: 3px 10px 3px 10px;
+	border-radius:7px;
+}
+.rounded{
+width : 500px;
+height : 300px;
+border-radius : 3px;
+object-fit : cover;
+}
+body{background-color:#F7F8FA;
+font-family: SpoqaHanSans !important;
+} 
+
+

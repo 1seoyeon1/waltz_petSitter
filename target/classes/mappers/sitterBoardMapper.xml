@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="sitterBoardMapper">
+<!-- sitter 프로필리스트 -->
+<select id="sbList" resultType="com.pet.sitter.vo.SitterBoardVO" parameterType="com.pet.sitter.vo.SearchCriteria">
+SELECT * FROM 
+(SELECT SM.SITTER_EMAIL,SITTER_IMAGE, SITTER_PRICE, SITTER_ADDR, RPAD(SUBSTR(SM.SITTER_NAME,1,1),LENGTH(SM.SITTER_NAME)+1,'*') AS SITTER_NAME, SITTER_GENDER, 
+ROW_NUMBER() OVER(ORDER BY SM.SITTER_EMAIL) AS RNUM, NVL(R,0) AS RATE, NVL(CT,0) AS COUNT
+FROM (SELECT * FROM SITTERBOARD NATURAL JOIN SITTERMEMBER <include refid="search"></include>) SM 
+LEFT OUTER JOIN (SELECT SITTER_EMAIL,TRUNC(AVG(R_RATE),1) AS R,COUNT(*) AS CT FROM REVIEWBOARD GROUP BY SITTER_EMAIL) RT ON SM.SITTER_EMAIL=RT.SITTER_EMAIL) 
+WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd} 
+</select>
+
+<select id="rvList" resultType = "com.pet.sitter.vo.ReviewVO">
+SELECT RNO, SITTER_EMAIL, USER_EMAIL, CONCAT(SUBSTR(R_CONTENT,1,7),'...')AS R_CONTENT FROM REVIEWBOARD where rwrite_date between sysdate-7 and sysdate
+</select>
+
+<select id="rvListCount" resultType="Map">
+SELECT SM.SITTER_EMAIL, NVL(CT,0) AS COUNT 
+FROM SITTERMEMBER SM LEFT OUTER JOIN (SELECT SITTER_EMAIL, COUNT(*) AS CT FROM REVIEWBOARD GROUP BY SITTER_EMAIL) RV ON SM.SITTER_EMAIL=RV.SITTER_EMAIL
+</select>
+
+<!--  detail 이름,전화번호 마스킹 -->
+<select id="profileView" resultType="com.pet.sitter.vo.SitterBoardVO">
+SELECT SITTER_EXP, SITTER_INTRO, SITTER_PRICE, SITTER_IMAGE, AA.SITTER_EMAIL, SITTER_ADDR,
+SITTER_NAME, RPAD(SUBSTR(SITTER_NAME,1,1),LENGTH(SITTER_NAME)+1,'*') AS MKSITTER_NAME, SITTER_PHONE,
+CONCAT(SUBSTR(SITTER_PHONE,1,3) , ( ('-' || RPAD('*',4,'*') ) || ('-' || RPAD('*',4,'*'))  ) ) AS MKSITTER_PHONE, SITTER_GENDER,RATE FROM 
+(SELECT * FROM SITTERBOARD NATURAL JOIN SITTERMEMBER WHERE SITTER_EMAIL=#{sitter_email}) AA LEFT OUTER JOIN (SELECT SITTER_EMAIL, TRUNC(AVG(R_RATE),1) AS RATE 
+FROM REVIEWBOARD GROUP BY SITTER_EMAIL) BB 
+ON AA.SITTER_EMAIL=BB.SITTER_EMAIL
+</select>
+
+<select id="listCount" resultType="int" parameterType="com.pet.sitter.vo.SearchCriteria">
+SELECT COUNT(SITTER_EMAIL) FROM SITTERBOARD NATURAL JOIN SITTERMEMBER <include refid="search"></include>
+</select>
+
+<update id="editBoard">
+UPDATE SITTERBOARD SET SITTER_ADDR=#{sitter_addr},
+SITTER_PRICE=#{sitter_price}, SITTER_EXP=#{sitter_exp}, SITTER_INTRO=#{sitter_intro}
+WHERE SITTER_EMAIL=#{sitter_email}
+</update>
+
+<update id="editMember">
+UPDATE SITTERMEMBER SET SITTER_NAME=#{sitter_name}, SITTER_GENDER=#{sitter_gender}
+WHERE SITTER_EMAIL=#{sitter_email}
+</update>
+
+<update id="editImage">
+UPDATE SITTERBOARD SET SITTER_IMAGE=#{sitter_image}
+WHERE SITTER_EMAIL=SUBSTR(#{sitter_image},0,INSTR(#{sitter_image},'.',-1,1)-1)
+</update>
+
+<!-- 예약부분 -->
+
+
+<insert id="insertrq">
+INSERT INTO RESERVE (RENO, SITTER_EMAIL, USER_EMAIL, START_DATE, END_DATE, ST_TIME, ED_TIME, ALL_DAY, MEMO)
+VALUES(SEQ_rqno.nextval, #{sitter_email}, #{user_email}, #{start_date}, #{end_date}, #{st_time}, #{ed_time}, #{all_day}, #{memo})
+</insert>
+
+<!-- sitter_email로 리스트 연결(sitter 프로필 디테일 창 달력에 출력) -->
+<select id="reserveList" resultType="com.pet.sitter.vo.ReserveVO">
+SELECT RENO, CHK, CONCAT(SUBSTR(USER_EMAIL,1,2),LPAD('*',3,'*')) AS USER_EMAIL ,(START_DATE+1) AS START_DATE,(END_DATE+2) AS END_DATE,SUBSTR(ST_TIME,1,2) AS ST_TIME,SUBSTR(ED_TIME,1,2) AS ED_TIME, ALL_DAY
+FROM RESERVE WHERE SITTER_EMAIL = #{sitter_email}
+</select>
+
+<!-- 맵으로 리스트 연결(예약 요청 리스트) -->
+<select id="rqList" resultType="com.pet.sitter.vo.ReserveVO" parameterType="MAP">
+SELECT * FROM
+(SELECT RENO,SITTER_EMAIL, USER_EMAIL, START_DATE, END_DATE, ST_TIME, ED_TIME, RQ_DATE, MEMO, CHK, RD, ROW_NUMBER() OVER(ORDER BY RQ_DATE DESC) AS RNUM 
+FROM (SELECT * FROM RESERVE WHERE SITTER_EMAIL=#{sitter_email} ))
+WHERE RNUM BETWEEN #{scri.rowStart} AND #{scri.rowEnd}
+</select>
+
+<!-- 맵으로 리스트 연결(신규 예약 요청 리스트) -->
+<select id="newrqList" resultType="com.pet.sitter.vo.ReserveVO" parameterType="MAP">
+SELECT * FROM
+(SELECT RENO,SITTER_EMAIL, USER_EMAIL, START_DATE, END_DATE, ST_TIME, ED_TIME, RQ_DATE, MEMO, CHK, ROW_NUMBER() OVER(ORDER BY RQ_DATE DESC) AS RNUM 
+FROM (SELECT * FROM RESERVE WHERE SITTER_EMAIL=#{sitter_email} AND RD=0 ))
+WHERE RNUM BETWEEN #{scri.rowStart} AND #{scri.rowEnd}
+</select>
+
+<!-- 예약 내용 보기 -->
+<select id="rqView" resultType="com.pet.sitter.vo.ReserveVO">
+SELECT RENO, SITTER_EMAIL, USER_EMAIL, (SUBSTR(USER_PHONE,1,3) || '-' || SUBSTR(USER_PHONE,4,4) || '-' || SUBSTR(USER_PHONE,8,4)) AS USER_PHONE, CHK, START_DATE, END_DATE, ST_TIME, ED_TIME, MEMO, ALL_DAY
+FROM RESERVE NATURAL JOIN USERMEMBER WHERE RENO=#{reno} 
+</select>
+<update id="readCh">
+UPDATE RESERVE SET RD=1 WHERE RENO=#{reno}
+</update>
+
+<!-- 예약리스트 개수 -->
+<select id="rqlistCount" resultType="int">
+SELECT COUNT(*) FROM RESERVE WHERE SITTER_EMAIL=#{sitter_email}
+</select>
+
+<!-- 예약요청 거절 -->
+<update id="rqReject">
+UPDATE RESERVE SET CHK=2 WHERE RENO=#{reno}
+</update>
+
+<!-- 예약요청 수락 -->
+<update id="rqAccept">
+UPDATE RESERVE SET CHK=1 WHERE RENO=#{reno}
+</update>
+
+<!-- 새로운 예약요청 개수 -->
+<select id="newRqCount" resultType="int">
+SELECT COUNT(*) FROM RESERVE WHERE SITTER_EMAIL=#{sitter_email} AND RD=0
+</select>
+
+<!-- 펫정보 연결 -->
+<select id="petinfo" resultType="com.pet.sitter.vo.PetInfoVO">
+SELECT * FROM PETINFO WHERE USER_EMAIL = #{user_email}
+</select>
+
+<select id="mrqList" resultType="com.pet.sitter.vo.ReserveVO" parameterType="MAP">
+
+SELECT * FROM
+(SELECT RENO,SITTER_EMAIL, USER_EMAIL, START_DATE, END_DATE, (END_DATE+6) AS LAST_DATE, RQ_DATE, ST_TIME, ED_TIME, CHK, MEMO, RV, ROW_NUMBER() OVER(ORDER BY RQ_DATE DESC) AS RNUM 
+FROM (SELECT * FROM RESERVE WHERE USER_EMAIL=#{user_email} ))
+WHERE RNUM BETWEEN #{scri.rowStart} AND #{scri.rowEnd}
+
+</select>
+
+<!-- member 요청 취소 -->
+<delete id="rqcancel">
+delete from reserve where reno=#{reno}
+</delete>
+<select id="mrqListCount" resultType="int">
+SELECT COUNT(RENO) FROM RESERVE WHERE user_email = #{user_email}
+</select>
+
+<!-- rq리스트에서 sitter프로필 보기 -->
+<select id="rqSittPf" resultType="com.pet.sitter.vo.SitterBoardVO">
+SELECT SITTER_EMAIL, SITTER_NAME, SITTER_GENDER, (SUBSTR(SITTER_PHONE,1,3) || '-' || SUBSTR(SITTER_PHONE,4,4) || '-' || SUBSTR(SITTER_PHONE,8,4)) AS SITTER_PHONE, SITTER_ADDR
+FROM SITTERMEMBER NATURAL JOIN SITTERBOARD
+WHERE SITTER_EMAIL=(SELECT SITTER_EMAIL FROM RESERVE WHERE RENO=#{reno})
+</select>
+<!-- rq리스트 sitter 정보에 예약정보 전달 -->
+<select id="rqInfo" resultType="com.pet.sitter.vo.ReserveVO">
+SELECT START_DATE, END_DATE, ST_TIME, ED_TIME, ALL_DAY FROM RESERVE WHERE RENO=#{reno}
+</select>
+<!-- 반복구문 -->
+<sql id="search">
+<if test="searchType != null">
+<if test="searchType=='e'.toString()">WHERE SITTER_EMAIL LIKE '%'||#{keyword}||'%'</if>
+<if test="searchType=='a'.toString()">WHERE SITTER_ADDR LIKE '%'||#{keyword}||'%'</if>
+<if test="searchType=='pu'.toString()">WHERE SITTER_PRICE <![CDATA[ >= ]]> #{keyword} </if>
+<if test="searchType=='pd'.toString()">WHERE SITTER_PRICE <![CDATA[ <= ]]> #{keyword} </if>
+<if test="searchType=='n'.toString()">WHERE upper(SITTER_NAME) LIKE upper('%'||#{keyword}||'%') </if>
+<if test="searchType=='g'.toString()">WHERE SITTER_GENDER LIKE '%'||#{keyword}||'%' </if>
+</if></sql>
+
+</mapper>

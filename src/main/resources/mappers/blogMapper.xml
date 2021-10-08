@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="blogMapper">
+    <insert id="insert">
+       insert into blog ( blog_bno,  blog_title, blog_content,  blog_semail, blog_memail, blog_date, blog_image, blog_category)
+       values ( seq_blog_bno.nextval, #{blog_title}, #{blog_content}, #{blog_semail}, #{blog_memail}, sysdate, #{blog_image}, #{blog_category})
+    </insert>
+    
+    <select id="listPage" resultType="com.pet.sitter.vo.BlogVO" parameterType="com.pet.sitter.vo.SearchCriteria">
+    select blog_bno, blog_content, blog_image, blog_title, blog_semail, blog_memail, blog_date
+     from ( select blog_bno,
+     blog_content,
+     blog_image, 
+     blog_title, 
+     blog_semail, 
+     blog_memail, 
+     blog_date, 
+     row_number() 
+    over (order by blog_bno desc) as rnum from blog where 1 = 1 
+  	<include refid="search"></include>
+             ) MP where rnum between #{rowStart} and #{rowEnd} 
+             order by blog_bno desc 
+    </select>
+    
+    <select id="listCategory" resultType="com.pet.sitter.vo.BlogVO" parameterType="String">
+    	select blog_bno, blog_content, blog_image, blog_title, blog_semail, blog_memail, blog_date from
+    	blog where blog_category = #{blog_category}
+    </select>
+    
+    <!--  카테고리 별로 총 계시물 카운트 -->
+    <select id="blogCategoryCnt" resultType="com.pet.sitter.vo.BlogCategories" >
+    select * from(select count(*) as "lifestyle" from blog where blog_category = '일상'), 
+    (select count(*) as "myPet" from blog where blog_category = '마이펫'), (select  count(*) as "knowledge" from blog where blog_category = '상식'),
+    (select count(*) as "playground" from blog where blog_category = '놀이터'), (select count(*) as "petItems" from blog where blog_category = '펫용품')
+   
+    </select>
+   
+   <select id="blogCategoryCount" resultType="int" parameterType="String">
+   select count(*) from blog where blog_category = #{blog_category}
+   </select>
+     
+        <!--  https://wakestand.tistory.com/243 -->
+    <select id="listCount" parameterType="com.pet.sitter.vo.SearchCriteria" resultType="int">
+    select count(blog_bno)
+    from blog
+    where 1 = 1
+    <include refid="search"></include>
+    and blog_bno > 0 
+    </select>
+    
+<!--  refid(reference id) 는 반복되는 쿼리를 미리 작성해 놓고 재활용 할수 있게 해준다. -->
+    <sql id="search">
+  and (blog_category like '%' || #{keyword} || '%' 
+   or blog_TITLE LIKE '%' || #{keyword} || '%')
+    </sql>
+    
+    <select id="read" parameterType="int" resultType="com.pet.sitter.vo.BlogVO">
+    select blog_bno, blog_title, blog_image, blog_content, blog_semail, blog_memail, blog_date, blog_category from blog where blog_bno = #{blog_bno} 
+    </select>
+    
+    <update id="update" parameterType="com.pet.sitter.vo.BlogVO">
+       update blog
+       set blog_title = #{blog_title},
+       blog_content = #{blog_content},
+       blog_category = #{blog_category}
+       where blog_bno = #{blog_bno}
+    </update>
+    
+    <delete id="delete" parameterType="int">
+       delete from blog where blog_bno = #{blog_bno}
+    </delete>
+    
+    <select id="likeTotal" parameterType="com.pet.sitter.vo.BlogVO" resultType="int">
+    select count(*) as tc from bloglike where likeblog_bno=#{blog_bno}
+    </select>
+    
+    
+     <select id="likeRead" parameterType="com.pet.sitter.vo.BlogLikeVO" resultType="com.pet.sitter.vo.BlogLikeVO">
+    select tc, rc from (select count(*) as tc from bloglike where likeblog_bno=#{likeBlog_bno}), (select count(*) as rc from bloglike where likeblog_bno = #{likeBlog_bno} and slikeblog_email = #{likeBlog_email}
+    or  likeblog_bno = #{likeBlog_bno} and mlikeblog_email = #{likeBlog_email})
+    </select>
+    
+     <insert id="slikeAdd">
+       insert into blogLike (likeblog_bno, slikeblog_email, likeblog_regdate)
+       values ( #{likeBlog_bno}, #{likeBlog_email}, sysdate)
+    </insert>
+    
+     <insert id="mlikeAdd">
+       insert into blogLike (likeblog_bno, mlikeblog_email, likeblog_regdate)
+       values ( #{likeBlog_bno}, #{likeBlog_email}, sysdate)
+    </insert>
+    
+    <delete id="likeDelete">
+    Delete from blogLike where likeblog_bno = #{likeBlog_bno} and slikeblog_email = #{likeBlog_email}
+    or likeblog_bno = #{likeBlog_bno} and mlikeblog_email = #{likeBlog_email}
+    </delete>
+    </mapper>

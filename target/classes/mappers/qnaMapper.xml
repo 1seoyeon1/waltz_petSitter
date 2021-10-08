@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qnaMapper">
+	<!-- 게시판 글 작성 -->
+	<insert id="insert">
+		INSERT INTO qna( qno, qna_title, qna_category, qna_content, user_email)
+					VALUES(	  SEQ_qna_qno.NEXTVAL, #{qna_title}, #{qna_category}, #{qna_content}, #{user_email})
+	</insert>
+	
+	<select id="calist" resultType="com.pet.sitter.vo.QnaVO">
+		<![CDATA[
+			SELECT qna_category
+			FROM qna
+		]]>
+	</select>
+	
+	<select id="reply" resultType="com.pet.sitter.vo.QnaReplyVO">
+		<!-- parameterType: 받아오는 값 / resultType: 넘겨줄 값  -->
+		SELECT qno, qna_rno, qna_reply_content, sitter_email, qna_reply_date, sitter_image   
+   		FROM qnaReply natural join sitterBoard
+	</select>
+	
+	<select id="listPage" resultType="com.pet.sitter.vo.QnaVO" parameterType="com.pet.sitter.vo.SearchCriteria">
+		<!-- parameterType: 받아오는 값 / resultType: 넘겨줄 값  -->
+		SELECT qno, qna_title, qna_category, qna_content, user_email, qna_date, reply
+		FROM(select qno, qna_title, qna_category, qna_content, user_email, qna_date, reply, 
+			 		row_number() over(order by qno desc) as rnum
+			 from qna
+			 where 1 = 1 
+						<if test="keyword != null">
+							and (qna_category like '%'||#{keyword}||'%'
+							or qna_title LIKE '%' || #{keyword} || '%'
+							or qna_content LIKE '%' || #{keyword} || '%')
+						</if>) MP
+		WHERE rnum BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY qno DESC
+	</select>
+	
+	<select id="listCount" parameterType="com.pet.sitter.vo.SearchCriteria" resultType="int">
+		SELECT COUNT(qno)
+			FROM qna			
+			<if test="keyword != null">
+            where  qna_category like '%'||#{keyword}||'%'
+							or qna_title LIKE '%' || #{keyword} || '%'
+							or qna_content LIKE '%' || #{keyword} || '%'
+					
+ 	        </if>
+ 
+	</select>
+	
+	
+	<select id="read" parameterType="int" resultType="com.pet.sitter.vo.QnaVO">
+		SELECT  qno, qna_title, qna_category, qna_content, user_email, qna_date
+		from qna
+		where qno = #{qno}
+	</select>
+	
+	<select id="Image" resultType="String">
+		SELECT sitter_image
+		FROM  SITTERBOARD
+		WHERE sitter_email=#{sitter_email}
+	</select>
+	
+	<update id="update" parameterType="com.pet.sitter.vo.QnaVO">
+		UPDATE qna
+			SET qna_title = #{qna_title},
+				qna_content = #{qna_content}
+		WHERE qno = #{qno}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE
+			FROM qna
+			WHERE qno = #{qno}
+	</delete>
+
+
+</mapper>

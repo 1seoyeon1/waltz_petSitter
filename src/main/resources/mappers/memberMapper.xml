@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="memberMapper">
+
+
+	<insert id="memberRegister">
+		insert into usermember(
+		user_email, user_password, user_name, user_phone, user_gender
+		)
+		values(
+		#{user_email}, #{user_password}, #{user_name}, #{user_phone}, #{user_gender}
+		)
+	</insert>
+
+
+	<select id="memberLogin"  resultType="com.pet.sitter.vo.MemberVO">
+
+		select user_email , user_password from usermember where user_email =
+		#{user_email}
+
+	</select>
+
+        <!-- 로그인 체크 -->
+		<select id="memberLoginChk" resultType="int" parameterType="com.pet.sitter.vo.MemberVO">
+		select count(*) from usermember
+		where user_email = #{user_email}
+		</select>
+		
+
+      	<!-- 이메일 중복 체크 -->
+      <select id="memberemailChk" resultType="int" parameterType="com.pet.sitter.vo.MemberVO">
+        SELECT COUNT(*) FROM USERMEMBER
+        WHERE user_email = #{user_email} 
+      </select>
+      
+      
+      	<!-- 전화번호 중복 체크 -->
+      <select id="memberphoneChk" resultType="int" parameterType="com.pet.sitter.dao.MemberDAO">
+        SELECT COUNT(*) FROM USERMEMBER
+        WHERE user_phone = #{user_phone}
+      </select>
+
+				
+		<!-- 삭제 체크 -->
+		<select id = "memberDeleteChk" resultType="String" parameterType="com.pet.sitter.vo.MemberVO">
+		select user_password from usermember where user_email = #{user_email}
+		</select>
+		
+       <delete id="memberDelete">
+       delete from usermember where user_email = #{user_email}
+       </delete>
+       
+       
+       <!-- 멤버의 상세보기 -->
+       <select id="memberProfile" resultType="com.pet.sitter.vo.MemberVO" parameterType="String">
+        select * from usermember where user_email = #{user_email}
+       </select>
+       
+       
+       
+       <!-- 멤버의 프로필 수정 -->
+       <update id="memberProfileUpdate">
+       update usermember set user_name = #{user_name} , user_phone = #{user_phone}
+       </update>
+       
+		
+</mapper>
