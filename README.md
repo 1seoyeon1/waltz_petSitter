@@ -9,7 +9,7 @@
 - DB : Oracle 
 - Front-End : Jsp, Jquery, Ajax
 - Back-End : Spring Framework Legacy(JAVA) 기반
-- Web Container : Tomcat9 , Vmware tc Server Developer Edition v4.1
+- Web Container : Tomcat9
 - 외부 API : 카카오 지도 API, 이지윅 에디터(CKeditor4)사용
 
 ## 나의 역할
